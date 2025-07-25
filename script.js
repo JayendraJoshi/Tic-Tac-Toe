@@ -1,7 +1,7 @@
 const gameBoard = (function(){
     const fieldsArray = (function() {
         const array = [];
-        for (let i = 0; i < 9; i++) {
+        for (let i = 1; i < 10; i++) {
             let cell = Cell();
             cell.setID(i);
             array.push(cell);
@@ -19,11 +19,27 @@ const gameBoard = (function(){
         fieldsArrayIndex++;
       }
     }
+    function markCell(player,id){
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+              let cell = board[i][j];
+              if(cell.getID===id){
+                if(cell.getValue != ""){
+                    console.log("This cell is already marked!")
+                    return;
+                }
+                console.log(cell.getValue());
+                cell.setValue(player.token);
+                console.log(cell.getValue());
+              }
+            }
+          }
+    }
     const printBoard = () => {
         function getBoardWithCellValues(board) {
             const boardWithCellValues = board.map(function(row) {
                 return row.map(function(cell) {
-                    return cell.getValue();
+                    return cell.getID();
                 });
             });
             return boardWithCellValues;
@@ -31,18 +47,21 @@ const gameBoard = (function(){
         const boardWithCellValues = getBoardWithCellValues(board);
         console.log(boardWithCellValues);
     };
-    printBoard();
-})
+
+    return{
+        board,
+        printBoard,
+        markCell
+    };
+})();
 function Cell() {
     let value="";
     let id = 0;
   
-    // Accept a player's token to change the value of the cell
-    const addSymbol = (player) => {
+    const setValue = (player) => {
       value = player;
     };
   
-    // How we will retrieve the current value of this cell through closure
     const getValue = () => value;
     const setID = (number)=>{
         id = number;
@@ -50,7 +69,7 @@ function Cell() {
     const getID = () =>id;
 
     return {
-      addSymbol,
+      setValue,
       getValue,
       setID,
       getID
@@ -59,13 +78,39 @@ function Cell() {
 function createPlayer (name, id, token){
     return {name,id,token};
 }
-const gameController = (function(gameBoard, player1, player2){
+const gameController = (function(){
+    const players = [player1,player2];
+    let activePlayer = players[0];
+    const getActivePlayer = () => activePlayer;
+    function switchPlayerTurn(){
+        if (activePlayer === players[0]){
+            activePlayer = players[1]
+        }else{
+            activePlayer = players[0];
+        }
+    }
+    const printNewRound = () => {
+        gameBoard.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+      };
+    const playRound = () => {
+        //const answer = prompt('Enter the ID of the cell you want to mark:');
+        //console.log(`${answer} entered!`); 
+        //gameBoard.markCell(getActivePlayer(), parseInt(answer)); 
+        switchPlayerTurn();
+        printNewRound();
+    }
+    printNewRound();
+    
+    return{
+        playRound,
+        getActivePlayer
+    };
     
 })
 
 const player1 = createPlayer('Tim',1,'0');
 const player2 = createPlayer('Max',2,'X');
 
-console.log(player1);
-console.log(player2);
-gameBoard();
+const game = gameController(gameBoard, player1, player2);
+game.playRound();
