@@ -27,36 +27,37 @@ const gameBoard = (function(){
               if(cell.getID()===id){
                 if(cell.getValue() != ""){
                     console.log("This cell is already marked!")
-                    return;
+                    return false;
                 }
                 cell.setValue(player.token);
+                return true;
               }
             }
           }
     }
-    const printBoard = () => {
-        function getBoardWithCellValues(board) {
-            const boardWithCellValues = board.map(function(row) {
-                return row.map(function(cell) {
-                    return cell.getValue();
-                });
+    function getBoardWithCellValues(board) {
+        const boardWithCellValues = board.map(function(row) {
+            return row.map(function(cell) {
+                return cell.getValue();
             });
-            return boardWithCellValues;
-        }
-        function getBoardWithCellID(board) {
-            const boardWithCellIDs = board.map(function(row) {
-                return row.map(function(cell) {
-                    return cell.getID();
-                });
+        });
+        return boardWithCellValues;
+    }
+    function getBoardWithCellID(board) {
+        const boardWithCellIDs = board.map(function(row) {
+            return row.map(function(cell) {
+                return cell.getID();
             });
-            return boardWithCellIDs;
-        }
+        });
+        return boardWithCellIDs;
+    }
+    ;
+    const printBoard = () => {  
         const boardWithCellValues = getBoardWithCellValues(board);
         const boardWithCellIDs = getBoardWithCellID(board);
-
+    
         console.log(boardWithCellIDs);
         console.log(boardWithCellValues);
-    
     };
    
     const submitButton = document.querySelector("button");
@@ -69,7 +70,8 @@ const gameBoard = (function(){
         board,
         printBoard,
         markCell,
-        getCurrentInput
+        getCurrentInput,
+        getBoardWithCellValues
     };
 })();
 function Cell() {
@@ -109,50 +111,101 @@ const gameController = (function(){
     }
     let i = 0;
     const printNewRound = () => {
-
-        if(i>=9)return;
-        //gameBoard.printBoard();
-        console.log(`${getActivePlayer().name}'s turn.`);
-        playRound();
+        if(areThereCellsLeft){
+            playRound();
+        }
 
       };
     const submitButton = document.querySelector("button");
     submitButton.addEventListener("click",()=>{
         printNewRound();
     })
+    function areThereCellsLeft(){
+        const boardWithCellValues = gameBoard.getBoardWithCellValues(gameBoard.board);
+        for (let i = 0; i < boardWithCellValues.length; i++) {
+            for (let j = 0; j < boardWithCellValues[i].length; j++) {
+                if (boardWithCellValues[i][j] === "") {
+                    return true; 
+                }
+            }
+        }
+        console.log("No empty cells left, it's a tie!");
+        return false; 
+    }
+    function isTheGameOver(){
+        const boardWithCellValues = gameBoard.getBoardWithCellValues(gameBoard.board);
+        if (boardWithCellValues[0][0]==="X" && boardWithCellValues[0][1]==="X" &&boardWithCellValues[0][2]==="X" ) {
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[0][0]==="O" && boardWithCellValues[0][1]==="O" &&boardWithCellValues[0][2]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[0][0]==="X" && boardWithCellValues[1][0]==="X" &&boardWithCellValues[2][0]==="X" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[0][0]==="O" && boardWithCellValues[1][0]==="O" &&boardWithCellValues[2][0]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[0][0]==="X" && boardWithCellValues[1][1]==="X" &&boardWithCellValues[2][2]==="X" ){
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[0][0]==="O" && boardWithCellValues[1][1]==="O" &&boardWithCellValues[2][2]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[0][1]==="X" && boardWithCellValues[1][1]==="X" &&boardWithCellValues[2][1]==="X" ){
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[0][1]==="O" && boardWithCellValues[1][1]==="O" &&boardWithCellValues[2][1]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[0][2]==="X" && boardWithCellValues[1][1]==="X" &&boardWithCellValues[2][0]==="X" ){
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[0][2]==="O" && boardWithCellValues[1][1]==="O" &&boardWithCellValues[2][0]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[0][2]==="X" && boardWithCellValues[1][2]==="X" &&boardWithCellValues[2][2]==="X" ){
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[0][2]==="O" && boardWithCellValues[1][2]==="O" &&boardWithCellValues[2][2]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[1][0]==="X" && boardWithCellValues[1][1]==="X" &&boardWithCellValues[1][2]==="X" ){
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[1][0]==="O" && boardWithCellValues[1][1]==="O" &&boardWithCellValues[1][2]==="O" ){
+            displayWinner(players[1]);
+        }else if(boardWithCellValues[2][0]==="X" && boardWithCellValues[2][1]==="X" &&boardWithCellValues[2][2]==="X" ){
+            displayWinner(players[0]);
+        }else if(boardWithCellValues[2][0]==="O" && boardWithCellValues[2][1]==="O" &&boardWithCellValues[2][2]==="O" ){
+            displayWinner(players[1]);
+        }else{
+            return false;
+        }
+        return true;
 
-    /*
-    const printNewRound = () => {
+    }
+    function displayWinner(player){
+        console.log(`${player.name} has won!`)
 
-        if(i>=3)return;
-        gameBoard.printBoard();
-        console.log(`${getActivePlayer().name}'s turn.`);
-        playRound();
-
-      };*/
+    }
     const playRound = () => {
-        if (i >= 3) return; 
-       // const answer = prompt('Enter the ID of the cell you want to mark:');
+        if(isTheGameOver() || !areThereCellsLeft()){
+            return;
+        }
         const answer = gameBoard.getCurrentInput();
         console.log(`${answer} entered!`); 
-        gameBoard.markCell(getActivePlayer(), parseInt(answer)); 
+        let validInput = gameBoard.markCell(getActivePlayer(), parseInt(answer)); 
         gameBoard.printBoard();
-        switchPlayerTurn();
+        if(isTheGameOver() || !areThereCellsLeft()){
+            return;
+        }
+        if(validInput){
+            switchPlayerTurn();
+        }
+        console.log(`${getActivePlayer().name}'s turn.(token = ${getActivePlayer().token})`);
         i++;
-        //printNewRound();
-    }
     
+    }
+    console.log(`${getActivePlayer().name}'s turn.(token = ${getActivePlayer().token})`);
+    gameBoard.printBoard();
     return{
         playRound,
         getActivePlayer,
-        //printNewRound
+        
     };
     
 })
 
-const player1 = createPlayer('Tim',1,'O');
-const player2 = createPlayer('Max',2,'X');
+const player1 = createPlayer('Tim',1,'X');
+const player2 = createPlayer('Max',2,'O');
 
-const game = gameController(gameBoard, player1, player2);
-gameBoard.printBoard();
-//game.printNewRound();
+const game = gameController();
+//gameBoard.printBoard();
