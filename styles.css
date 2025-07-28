@@ -1,0 +1,38 @@
+/* resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+  }
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 500; 
+    font-style: normal;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex: 0 0 10vh; /* Takes 20% of viewport height */
+    background-color: lightblue;
+}
+
+main {
+    flex: 1; /* Takes remaining space */
+    background-color: lightgray;
+}
+
+footer {
+    flex: 0 0 5vh; /* Takes 20% of viewport height */
+    background-color: lightgreen;
+}

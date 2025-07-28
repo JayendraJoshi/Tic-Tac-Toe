@@ -20,6 +20,24 @@ const gameBoard = (function(){
         fieldsArrayIndex++;
       }
     }
+    (function ShowBoardOnWebpage(){
+        const divContainer = document.createElement("div");
+        for(let i = 0;i< board.length;i++){
+            let divRowContainer = document.createElement("div");
+            divRowContainer.classList.add(`row-${i}-container`);
+            for(let j = 0;j<3;j++){
+                let divChild = document.createElement("div");
+                divChild.classList.add(`row-${i}`);
+                divChild.classList.add(`cell-${j}`);
+                divRowContainer.appendChild(divChild);
+            }
+            divContainer.appendChild(divRowContainer);
+        }
+        const main = document.querySelector("main");
+        main.appendChild(divContainer);
+    })()
+
+
     function markCell(player,id){
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
@@ -66,6 +84,7 @@ const gameBoard = (function(){
     });
     const getCurrentInput= () => currentInput;
     
+   
     return{
         board,
         printBoard,
