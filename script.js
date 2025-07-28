@@ -12,6 +12,7 @@ const gameBoard = (function(){
     const columns = 3;
     const board = [];
     let fieldsArrayIndex = 0; 
+    let currentInput;
     for (let i = 0; i < rows; i++) {
       board[i] = [];
       for (let j = 0; j < columns; j++) {
@@ -23,14 +24,12 @@ const gameBoard = (function(){
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
               let cell = board[i][j];
-              if(cell.getID===id){
-                if(cell.getValue != ""){
+              if(cell.getID()===id){
+                if(cell.getValue() != ""){
                     console.log("This cell is already marked!")
                     return;
                 }
-                console.log(cell.getValue());
                 cell.setValue(player.token);
-                console.log(cell.getValue());
               }
             }
           }
@@ -39,19 +38,38 @@ const gameBoard = (function(){
         function getBoardWithCellValues(board) {
             const boardWithCellValues = board.map(function(row) {
                 return row.map(function(cell) {
-                    return cell.getID();
+                    return cell.getValue();
                 });
             });
             return boardWithCellValues;
         }
+        function getBoardWithCellID(board) {
+            const boardWithCellIDs = board.map(function(row) {
+                return row.map(function(cell) {
+                    return cell.getID();
+                });
+            });
+            return boardWithCellIDs;
+        }
         const boardWithCellValues = getBoardWithCellValues(board);
-        console.log(boardWithCellValues);
-    };
+        const boardWithCellIDs = getBoardWithCellID(board);
 
+        console.log(boardWithCellIDs);
+        console.log(boardWithCellValues);
+    
+    };
+   
+    const submitButton = document.querySelector("button");
+        submitButton.addEventListener("click", () => {
+        currentInput = document.querySelector("input").value;
+    });
+    const getCurrentInput= () => currentInput;
+    
     return{
         board,
         printBoard,
-        markCell
+        markCell,
+        getCurrentInput
     };
 })();
 function Cell() {
@@ -89,28 +107,52 @@ const gameController = (function(){
             activePlayer = players[0];
         }
     }
+    let i = 0;
     const printNewRound = () => {
+
+        if(i>=9)return;
+        //gameBoard.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+        playRound();
+
+      };
+    const submitButton = document.querySelector("button");
+    submitButton.addEventListener("click",()=>{
+        printNewRound();
+    })
+
+    /*
+    const printNewRound = () => {
+
+        if(i>=3)return;
         gameBoard.printBoard();
         console.log(`${getActivePlayer().name}'s turn.`);
-      };
+        playRound();
+
+      };*/
     const playRound = () => {
-        //const answer = prompt('Enter the ID of the cell you want to mark:');
-        //console.log(`${answer} entered!`); 
-        //gameBoard.markCell(getActivePlayer(), parseInt(answer)); 
+        if (i >= 3) return; 
+       // const answer = prompt('Enter the ID of the cell you want to mark:');
+        const answer = gameBoard.getCurrentInput();
+        console.log(`${answer} entered!`); 
+        gameBoard.markCell(getActivePlayer(), parseInt(answer)); 
+        gameBoard.printBoard();
         switchPlayerTurn();
-        printNewRound();
+        i++;
+        //printNewRound();
     }
-    printNewRound();
     
     return{
         playRound,
-        getActivePlayer
+        getActivePlayer,
+        //printNewRound
     };
     
 })
 
-const player1 = createPlayer('Tim',1,'0');
+const player1 = createPlayer('Tim',1,'O');
 const player2 = createPlayer('Max',2,'X');
 
 const game = gameController(gameBoard, player1, player2);
-game.playRound();
+gameBoard.printBoard();
+//game.printNewRound();
