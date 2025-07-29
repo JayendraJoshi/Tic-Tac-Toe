@@ -23,16 +23,29 @@ body {
 }
 
 header {
-    flex: 0 0 10vh; /* Takes 20% of viewport height */
+    flex: 0 0 10vh; 
     background-color: lightblue;
 }
 
 main {
-    flex: 1; /* Takes remaining space */
+    flex: 1; 
     background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    padding: 10% 40%;
+}
+.div-container{
+    flex-grow: 1;
+    border:1px solid black;
+    display:flex;
+    flex-direction: column;
+}
+.row-container{
+    display: flex;
+    flex:1;
 }
 
 footer {
-    flex: 0 0 5vh; /* Takes 20% of viewport height */
+    flex: 0 0 5vh; 
     background-color: lightgreen;
 }
