@@ -239,9 +239,7 @@ const handleGameControl = function (player1, player2) {
   const eventHandler = handleEventListeners();
 
   const printNewRound = () => {
-    if (gameLogicHandler.areThereCellsLeft()) {
-      playRound();
-    }
+    playRound();
   };
 
   const playRound = () => {
