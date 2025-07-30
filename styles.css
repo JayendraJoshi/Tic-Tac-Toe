@@ -5,47 +5,85 @@
   box-sizing: border-box;
 }
 * {
-    margin: 0;
-    padding: 0;
-    font: inherit;
-  }
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
 @font-face {
-    font-family: 'Roboto';
-    src: url('fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 500; 
-    font-style: normal;
+  font-family: "Roboto";
+  src: url("fonts/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
 }
 body {
-    font-family: 'Roboto', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-header {
-    flex: 0 0 10vh; 
-    background-color: lightblue;
+header, footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 10vh;
+  background-color: rgb(34, 33, 33);
+  padding: clamp(1rem,2vh,1.5rem) 0;
+  color:white;
+}
+header h1{
+  font-size: clamp(50px,7vh,100px);
+  letter-spacing: 0;
+  line-height: 1;
 }
 
 main {
-    flex: 1; 
-    background-color: lightgray;
-    display: flex;
-    flex-direction: column;
-    padding: 10% 40%;
+  flex: 1;
+  background-color: rgba(240, 247, 250, 0.945);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap:4rem;
 }
-.div-container{
-    flex-grow: 1;
-    border:1px solid black;
-    display:flex;
-    flex-direction: column;
+.div-container {
+  width: clamp(300px,30vw,500px);
+  height: clamp(300px,30vw,500px);
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; 
 }
-.row-container{
-    display: flex;
-    flex:1;
+.display-divContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:4rem;
+  padding: 0rem 4rem;
+  background-color: black;
+  width: clamp(300px,30vw,500px);
+  height: clamp(500px,100vh,600px);
+  border:1px solid black;
+  color:white;
+}
+.players-displayDivContainer,.turn-displayDivContainer,.winner-displayDivContainer{
+  display: flex;
+  flex-direction: column;
+  gap:2rem;
+  justify-content: space-between;
+}
+.players-divDisplay,.turn-divDisplay,.winner-divDisplay{
+  background-color: white;
+  width: clamp(200px,20vw,300px);
+  height: clamp(50px,10vh,60px);
+}
+h2{
+  font-size: 2rem;
+}
+.row-container {
+  display: flex;
+  flex: 1;
 }
 
 footer {
-    flex: 0 0 5vh; 
-    background-color: lightgreen;
+  flex: 0 0 5vh;
 }
