@@ -31,13 +31,21 @@ body.fade-out {
 main {
   flex: 1;
   background-color: rgba(240, 247, 250, 0.945);
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 20vh 60vh 20vh;
   display: grid;
   align-items: center;
   justify-content: center;
   justify-items: center;
+  padding:10px;
+}
+.return{
+  align-self: flex-start;
+  margin-right: auto;
+  padding: 10px 20px;
 }
 .div-container {
+  grid-column: 2/3;
   width: clamp(300px,30vw,500px);
   height: clamp(300px,30vw,500px);
   border: 1px solid black;

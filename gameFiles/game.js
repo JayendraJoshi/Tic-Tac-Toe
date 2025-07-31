@@ -48,7 +48,6 @@ function createPlayer(name, token) {
 const handlePlayers = function (player1, player2) {
   const players = [player1, player2];
   const divDisplayer = handleDisplayDiv();
-  const handleHomeButton = handleHomeAndResetButton().showHomeButton;
   let activePlayer = players[0];
   function getActivePlayer() {
     return activePlayer;
@@ -67,7 +66,6 @@ const handlePlayers = function (player1, player2) {
   function displayWinner(number) {
     console.log(`${players[number].name} has won!`);
     divDisplayer.displayDiv.textContent=`${players[number].name} has won!`;
-    handleHomeButton();
   }
   return {
     getActivePlayer,
@@ -80,7 +78,6 @@ const handleGameLogic = function () {
   const cells = document.querySelectorAll(".cell");
   const playersHandler = handlePlayers(player1, player2);
   const divDisplayer = handleDisplayDiv();
-  const handleHomeButton = handleHomeAndResetButton().showHomeButton;
   function getArrayFromCells() {
     const cellsArray = [];
     for (let i = 0; i < 3; i++) {
@@ -104,7 +101,6 @@ const handleGameLogic = function () {
     }
     divDisplayer.displayDiv.textContent="No empty cells left, it's a tie!";
     console.log("No empty cells left, it's a tie!");
-    handleHomeButton();
     return false;
   }
   function isTheCellAlreadyMarked(div){
@@ -229,6 +225,7 @@ const handleGameControl = function (player1, player2) {
   const playerHandler = handlePlayers(player1, player2);
   const gameLogicHandler = handleGameLogic();
   const divDisplayer = handleDisplayDiv();
+  /*const handleHomeButton = handleHomeAndResetButton().showHomeButton;*/
 
   const handleEventListeners = function () {
     function handleCellClick(event) {
@@ -251,6 +248,16 @@ const handleGameControl = function (player1, player2) {
       });
     }
 
+    function setClickEventOnReturnButton(){
+      const returnButton = document.querySelector(".return");
+      returnButton.addEventListener("click",function(){
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+        window.location.href = "index.html"; 
+        }, 300);
+      })
+    }
+    setClickEventOnReturnButton();
     setClickEventOnCells();
     return {
       handleCellClick,
@@ -271,6 +278,7 @@ const handleGameControl = function (player1, player2) {
   const playRound = function(div) {
     div.textContent = playerHandler.getActivePlayer().token;
     if(!checkIfGameCanContinue()){
+      /*handleHomeButton();*/
       return;
     }
     playerHandler.switchPlayerTurn();
@@ -302,6 +310,7 @@ const handleDisplayDiv = function(){
     displayDiv
   }
 }
+/*
 const handleHomeAndResetButton = function(){
   const main = document.querySelector("main");
   function showHomeButton(){
@@ -324,6 +333,8 @@ const handleHomeAndResetButton = function(){
     showHomeButton
   }
 }
+  */
+
 const player1 = createPlayer(sessionStorage.getItem("player1Name"), "X");
 const player2 = createPlayer(sessionStorage.getItem("player2Name"), "O");
 const game = handleGameControl(player1, player2);
