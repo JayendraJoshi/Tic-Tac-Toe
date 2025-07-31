@@ -231,7 +231,7 @@ const handleGameControl = function (player1, player2) {
   const handleEventListeners = function () {
     function handleCellClick(event) {
       const div = event.target;
-      if(gameLogicHandler.isTheCellAlreadyMarked(div)|| !checkForValidInput()){
+      if(gameLogicHandler.isTheCellAlreadyMarked(div)){
         return;
       }
       playRound(div);
@@ -258,7 +258,7 @@ const handleGameControl = function (player1, player2) {
   };
   const eventHandler = handleEventListeners();
 
-  function checkForValidInput(){
+  function checkIfGameCanContinue(){
     if(gameLogicHandler.isTheGameOver() || !gameLogicHandler.areThereCellsLeft()){
       eventHandler.removeClickEventOnCells();
       return false;
@@ -268,6 +268,9 @@ const handleGameControl = function (player1, player2) {
 
   const playRound = function(div) {
     div.textContent = playerHandler.getActivePlayer().token;
+    if(!checkIfGameCanContinue()){
+      return;
+    }
     playerHandler.switchPlayerTurn();
     console.log(
       `${playerHandler.getActivePlayer().name}'s turn.(token = ${
