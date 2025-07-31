@@ -42,8 +42,8 @@ const gameBoard = (function () {
     main.appendChild(divContainer);
   })();
 })();
-function createPlayer(name, id, token) {
-  return { name, id, token };
+function createPlayer(name, token) {
+  return { name, token };
 }
 const handlePlayers = function (player1, player2) {
   const players = [player1, player2];
@@ -104,6 +104,12 @@ const handleGameLogic = function () {
     divDisplayer.displayDiv.textContent="No empty cells left, it's a tie!";
     console.log("No empty cells left, it's a tie!");
     return false;
+  }
+  function isTheCellAlreadyMarked(div){
+    if(div.textContent!=""){
+      return true;
+    }
+
   }
   function isTheGameOver() {
     const boardWithCellValues = getArrayFromCells();
@@ -213,18 +219,22 @@ const handleGameLogic = function () {
     getArrayFromCells,
     areThereCellsLeft,
     isTheGameOver,
-    cells,
+    isTheCellAlreadyMarked,
+    cells
   };
 };
 const handleGameControl = function (player1, player2) {
   const playerHandler = handlePlayers(player1, player2);
   const gameLogicHandler = handleGameLogic();
+  const divDisplayer = handleDisplayDiv();
 
   const handleEventListeners = function () {
     function handleCellClick(event) {
       const div = event.target;
-      div.textContent = playerHandler.getActivePlayer().token;
-      printNewRound();
+      if(gameLogicHandler.isTheCellAlreadyMarked(div)|| !checkForValidInput()){
+        return;
+      }
+      playRound(div);
     }
 
     function setClickEventOnCells() {
@@ -248,18 +258,16 @@ const handleGameControl = function (player1, player2) {
   };
   const eventHandler = handleEventListeners();
 
-  const printNewRound = () => {
-    playRound();
-  };
-
-  const playRound = () => {
-    if (gameLogicHandler.isTheGameOver()) {
+  function checkForValidInput(){
+    if(gameLogicHandler.isTheGameOver() || !gameLogicHandler.areThereCellsLeft()){
       eventHandler.removeClickEventOnCells();
-      return;
-    } else if (!gameLogicHandler.areThereCellsLeft()) {
-      eventHandler.removeClickEventOnCells();
-      return;
+      return false;
     }
+    return true;
+  }
+
+  const playRound = function(div) {
+    div.textContent = playerHandler.getActivePlayer().token;
     playerHandler.switchPlayerTurn();
     console.log(
       `${playerHandler.getActivePlayer().name}'s turn.(token = ${
@@ -267,8 +275,20 @@ const handleGameControl = function (player1, player2) {
       })`
     );
   };
+  const startDialog = ()=>{
+    console.log(
+      `${playerHandler.getActivePlayer().name}'s turn.(token = ${
+        playerHandler.getActivePlayer().token
+      })`
+      
+    );
+    divDisplayer.displayDiv.textContent=`${playerHandler.getActivePlayer().name}'s turn (${
+        playerHandler.getActivePlayer().token
+      })`
+  };
+  
   return {
-    printNewRound,
+    startDialog,
   };
 };
 const handleDisplayDiv = function(){
@@ -296,7 +316,7 @@ const handleHomeAndResetButton = function(){
     showHomeButton
   }
 }
-const player1 = createPlayer(sessionStorage.getItem("player1Name"), 1, "X");
-const player2 = createPlayer(sessionStorage.getItem("player2Name"), 2, "O");
+const player1 = createPlayer(sessionStorage.getItem("player1Name"), "X");
+const player2 = createPlayer(sessionStorage.getItem("player2Name"), "O");
 const game = handleGameControl(player1, player2);
-game.printNewRound();
+game.startDialog();
