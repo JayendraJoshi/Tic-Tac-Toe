@@ -19,6 +19,8 @@ function createBoardCell() {
   };
 }
 const gameBoard = (function () {
+  console.log(sessionStorage.getItem('player1Name'));
+  console.log(sessionStorage.getItem('player2Name'));
   (function renderBoard() {
     const divContainer = document.createElement("div");
     divContainer.classList.add("div-container");
@@ -45,12 +47,15 @@ function createPlayer(name, id, token) {
 }
 const handlePlayers = function (player1, player2) {
   const players = [player1, player2];
+  const divDisplayer = handleDisplayDiv();
+  const handleHomeButton = handleHomeAndResetButton().showHomeButton;
   let activePlayer = players[0];
   function getActivePlayer() {
     return activePlayer;
   }
   function setActivePlayer(player) {
     activePlayer = player;
+    divDisplayer.displayDiv.textContent=`${activePlayer.name}'s turn (${activePlayer.token})`;
   }
   function switchPlayerTurn() {
     if (getActivePlayer() === players[0]) {
@@ -61,6 +66,8 @@ const handlePlayers = function (player1, player2) {
   }
   function displayWinner(number) {
     console.log(`${players[number].name} has won!`);
+    divDisplayer.displayDiv.textContent=`${players[number].name} has won!`;
+    handleHomeButton();
   }
   return {
     getActivePlayer,
@@ -72,6 +79,7 @@ const handlePlayers = function (player1, player2) {
 const handleGameLogic = function () {
   const cells = document.querySelectorAll(".cell");
   const playersHandler = handlePlayers(player1, player2);
+  const divDisplayer = handleDisplayDiv();
   function getArrayFromCells() {
     const cellsArray = [];
     for (let i = 0; i < 3; i++) {
@@ -93,6 +101,7 @@ const handleGameLogic = function () {
         }
       }
     }
+    divDisplayer.displayDiv.textContent="No empty cells left, it's a tie!";
     console.log("No empty cells left, it's a tie!");
     return false;
   }
@@ -229,6 +238,7 @@ const handleGameControl = function (player1, player2) {
         div.removeEventListener("click", handleCellClick);
       });
     }
+
     setClickEventOnCells();
     return {
       handleCellClick,
@@ -261,8 +271,32 @@ const handleGameControl = function (player1, player2) {
     printNewRound,
   };
 };
+const handleDisplayDiv = function(){
+  const displayDiv = document.querySelector(".display");
+  return{
+    displayDiv
+  }
+}
+const handleHomeAndResetButton = function(){
+  const main = document.querySelector("main");
+  function showHomeButton(){
+    const homeButton = document.createElement("button");
+    homeButton.textContent = "Home";
+    homeButton.classList.add("homeButton");
+    main.appendChild(homeButton);
+    addEventListenerToHomeButton(homeButton);
+  }
+  function addEventListenerToHomeButton(homeButton){
+    homeButton.addEventListener("click",function(event){
+      window.location.href="index.html";
+    })
+  }
 
-const player1 = createPlayer("Tim", 1, "X");
-const player2 = createPlayer("Max", 2, "O");
+  return{
+    showHomeButton
+  }
+}
+const player1 = createPlayer(sessionStorage.getItem("player1Name"), 1, "X");
+const player2 = createPlayer(sessionStorage.getItem("player2Name"), 2, "O");
 const game = handleGameControl(player1, player2);
 game.printNewRound();
