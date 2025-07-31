@@ -10,7 +10,7 @@ const handleFormEvent = (function (){
             sessionStorage.setItem('player1Name',player1.value);
             sessionStorage.setItem('player2Name',player2.value);
 
-            window.location.href="game.html";
+            window.location.href="../game.html";
         });
     }
 })();
