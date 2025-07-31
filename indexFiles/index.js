@@ -9,8 +9,10 @@ const handleFormEvent = (function (){
 
             sessionStorage.setItem('player1Name',player1.value);
             sessionStorage.setItem('player2Name',player2.value);
-
-            window.location.href="../game.html";
+            document.body.classList.add("fade-out");
+            setTimeout(() => {
+                window.location.href = "game.html"; 
+              }, 300);
         });
     }
 })();

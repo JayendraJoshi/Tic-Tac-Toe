@@ -80,6 +80,7 @@ const handleGameLogic = function () {
   const cells = document.querySelectorAll(".cell");
   const playersHandler = handlePlayers(player1, player2);
   const divDisplayer = handleDisplayDiv();
+  const handleHomeButton = handleHomeAndResetButton().showHomeButton;
   function getArrayFromCells() {
     const cellsArray = [];
     for (let i = 0; i < 3; i++) {
@@ -103,6 +104,7 @@ const handleGameLogic = function () {
     }
     divDisplayer.displayDiv.textContent="No empty cells left, it's a tie!";
     console.log("No empty cells left, it's a tie!");
+    handleHomeButton();
     return false;
   }
   function isTheCellAlreadyMarked(div){
@@ -311,7 +313,10 @@ const handleHomeAndResetButton = function(){
   }
   function addEventListenerToHomeButton(homeButton){
     homeButton.addEventListener("click",function(event){
-      window.location.href="index.html";
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "index.html"; 
+      }, 300);
     })
   }
 

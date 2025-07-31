@@ -21,6 +21,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+body.fade {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+body.fade-out {
+  opacity: 0;
+}
 main {
   flex: 1;
   background-color: rgba(240, 247, 250, 0.945);
@@ -39,6 +46,13 @@ main {
   flex-shrink: 0; 
   justify-self: center;
 }
+.row-container {
+  display: flex;
+  flex: 1;
+}
+h2{
+  font-size: 2rem;
+}
 .display{
   width: clamp(300px,30vw,500px);
   padding:20px;
@@ -49,14 +63,8 @@ main {
 .homeButton{
   width: clamp(150px,15vw,250px);
   padding:10px 20px;
-  
 }
-.row-container {
-  display: flex;
-  flex: 1;
-}
-h2{
-  font-size: 2rem;
-}
+
+
 
 

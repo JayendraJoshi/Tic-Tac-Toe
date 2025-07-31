@@ -21,7 +21,13 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+body.fade {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+body.fade-out {
+  opacity: 0;
+}
 header, footer{
   display: flex;
   justify-content: center;
