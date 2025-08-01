@@ -48,7 +48,7 @@ const renderElements = (function () {
     player1H2.classList.add("player1Name");
 
     const scoreDiv = document.createElement("div");
-    scoreDiv.classList.add("scoreCounterContainer");
+    scoreDiv.classList.add("scoreCounterContainer1");
 
     const title = document.createElement("h2");
     title.classList.add("scoreTitle");
@@ -71,7 +71,7 @@ const renderElements = (function () {
     player2H2.classList.add("playe2Name");
 
     const scoreDiv = document.createElement("div");
-    scoreDiv.classList.add("scoreCounterContainer")
+    scoreDiv.classList.add("scoreCounterContainer2")
 
     const title = document.createElement("h2");
     title.classList.add("scoreTitle");
@@ -111,9 +111,9 @@ const handlePlayers = function (player1, player2) {
       setActivePlayer(players[0]);
     }
   }
-  function displayWinner(number) {
-    console.log(`${players[number].name} has won!`);
-    divDisplayer.displayDiv.textContent=`${players[number].name} has won!`;
+  function displayWinner() {
+    console.log(`${getActivePlayer().name} has won!`);
+    divDisplayer.displayDiv.textContent=`${getActivePlayer().name} has won!`;
   }
   return {
     getActivePlayer,
@@ -157,114 +157,98 @@ const handleGameLogic = function () {
     }
 
   }
-  function isTheGameOver() {
+  function hasSomeoneWon() {
     const boardWithCellValues = getArrayFromCells();
     if (
       boardWithCellValues[0][0] === "X" &&
       boardWithCellValues[0][1] === "X" &&
       boardWithCellValues[0][2] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+     ||
+    (
       boardWithCellValues[0][0] === "O" &&
       boardWithCellValues[0][1] === "O" &&
       boardWithCellValues[0][2] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][0] === "X" &&
       boardWithCellValues[1][0] === "X" &&
       boardWithCellValues[2][0] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][0] === "O" &&
       boardWithCellValues[1][0] === "O" &&
       boardWithCellValues[2][0] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    )|| 
+    (
       boardWithCellValues[0][0] === "X" &&
       boardWithCellValues[1][1] === "X" &&
       boardWithCellValues[2][2] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    )||
+    (
       boardWithCellValues[0][0] === "O" &&
       boardWithCellValues[1][1] === "O" &&
       boardWithCellValues[2][2] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][1] === "X" &&
       boardWithCellValues[1][1] === "X" &&
       boardWithCellValues[2][1] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][1] === "O" &&
       boardWithCellValues[1][1] === "O" &&
       boardWithCellValues[2][1] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][2] === "X" &&
       boardWithCellValues[1][1] === "X" &&
       boardWithCellValues[2][0] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][2] === "O" &&
       boardWithCellValues[1][1] === "O" &&
       boardWithCellValues[2][0] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][2] === "X" &&
       boardWithCellValues[1][2] === "X" &&
       boardWithCellValues[2][2] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[0][2] === "O" &&
       boardWithCellValues[1][2] === "O" &&
       boardWithCellValues[2][2] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[1][0] === "X" &&
       boardWithCellValues[1][1] === "X" &&
       boardWithCellValues[1][2] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    ) ||
+     (
       boardWithCellValues[1][0] === "O" &&
       boardWithCellValues[1][1] === "O" &&
       boardWithCellValues[1][2] === "O"
-    ) {
-      playersHandler.displayWinner(1);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[2][0] === "X" &&
       boardWithCellValues[2][1] === "X" &&
       boardWithCellValues[2][2] === "X"
-    ) {
-      playersHandler.displayWinner(0);
-    } else if (
+    ) ||
+    (
       boardWithCellValues[2][0] === "O" &&
       boardWithCellValues[2][1] === "O" &&
       boardWithCellValues[2][2] === "O"
-    ) {
-      playersHandler.displayWinner(1);
+    )) {
+      return true;
     } else {
       return false;
     }
-    return true;
   }
 
   return {
     getArrayFromCells,
     areThereCellsLeft,
-    isTheGameOver,
+    hasSomeoneWon,
     isTheCellAlreadyMarked,
     cells
   };
@@ -305,6 +289,10 @@ const handleGameControl = function (player1, player2) {
         }, 300);
       })
     }
+
+    function setClickEventOnNewRoundButton(){
+
+    }
     setClickEventOnReturnButton();
     setClickEventOnCells();
     return {
@@ -315,8 +303,21 @@ const handleGameControl = function (player1, player2) {
   };
   const eventHandler = handleEventListeners();
 
+  function increaseCounter(){
+    const winner = playerHandler.getActivePlayer();
+    if(winner.name===document.querySelector(".player1Name").textContent){
+      const scoreCounter= document.querySelector(".player1ScoreContainer > .scoreCounterContainer1 > .scoreCounter");
+      scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
+    }
+  }
+  
   function checkIfGameCanContinue(){
-    if(gameLogicHandler.isTheGameOver() || !gameLogicHandler.areThereCellsLeft()){
+    if(gameLogicHandler.hasSomeoneWon()){
+      playerHandler.displayWinner();
+      increaseCounter();
+      eventHandler.removeClickEventOnCells();
+      return false;
+    }else if(!gameLogicHandler.areThereCellsLeft()){
       eventHandler.removeClickEventOnCells();
       return false;
     }
