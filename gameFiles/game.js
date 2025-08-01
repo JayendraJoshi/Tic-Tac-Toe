@@ -18,9 +18,9 @@ function createBoardCell() {
     getDiv,
   };
 }
-const gameBoard = (function () {
-  console.log(sessionStorage.getItem('player1Name'));
-  console.log(sessionStorage.getItem('player2Name'));
+const renderElements = (function () {
+  const player1Name = sessionStorage.getItem("player1Name");
+  const player2Name = sessionStorage.getItem("player2Name");
   (function renderBoard() {
     const divContainer = document.createElement("div");
     divContainer.classList.add("div-container");
@@ -41,7 +41,55 @@ const gameBoard = (function () {
     const main = document.querySelector("main");
     main.appendChild(divContainer);
   })();
+  (function renderPlayer1ScoreContainer(){
+    const player1ScoreDiv = document.querySelector(".player1ScoreContainer");
+    const player1H2 = document.createElement("h2");
+    player1H2.textContent = player1Name;
+    player1H2.classList.add("player1Name");
+
+    const scoreDiv = document.createElement("div");
+    scoreDiv.classList.add("scoreCounterContainer");
+
+    const title = document.createElement("h2");
+    title.classList.add("scoreTitle");
+    title.textContent="Score";
+
+    const score = document.createElement("div");
+    score.classList.add("scoreCounter");
+    score.textContent="0";
+
+    scoreDiv.appendChild(title);
+    scoreDiv.appendChild(score);
+
+    player1ScoreDiv.appendChild(player1H2);
+    player1ScoreDiv.appendChild(scoreDiv); 
+  })();
+  (function renderPlayer2ScoreContainer(){
+    const player2ScoreDiv = document.querySelector(".player2ScoreContainer");
+    const player2H2 = document.createElement("h2");
+    player2H2.textContent = player2Name;
+    player2H2.classList.add("playe2Name");
+
+    const scoreDiv = document.createElement("div");
+    scoreDiv.classList.add("scoreCounterContainer")
+
+    const title = document.createElement("h2");
+    title.classList.add("scoreTitle");
+    title.textContent="Score";
+
+    const score = document.createElement("div");
+    score.classList.add("scoreCounter");
+    score.textContent="0";
+
+    scoreDiv.appendChild(title);
+    scoreDiv.appendChild(score);
+
+    player2ScoreDiv.appendChild(player2H2);
+    player2ScoreDiv.appendChild(scoreDiv);
+  })();
 })();
+
+
 function createPlayer(name, token) {
   return { name, token };
 }
@@ -71,7 +119,7 @@ const handlePlayers = function (player1, player2) {
     getActivePlayer,
     setActivePlayer,
     switchPlayerTurn,
-    displayWinner,
+    displayWinner
   };
 };
 const handleGameLogic = function () {
@@ -310,6 +358,7 @@ const handleDisplayDiv = function(){
     displayDiv
   }
 }
+
 /*
 const handleHomeAndResetButton = function(){
   const main = document.querySelector("main");
