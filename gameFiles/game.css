@@ -30,15 +30,18 @@ body.fade-out {
 }
 main {
   flex: 1;
-  background-color: rgba(240, 247, 250, 0.945);
+  background-color: #242423;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 20vh 60vh 20vh;
   display: grid;
   align-items: center;
   justify-content: center;
   justify-items: center;
+  color:#E8EDDF;
 }
-.return{
+.returnButton{
+  grid-column: 1/2;
+  grid-row:1/2;
   align-self: flex-start;
   margin-right: auto;
   padding: 10px 20px;
@@ -48,12 +51,16 @@ main {
   grid-row: 2/3;
   width: clamp(300px,30vw,500px);
   height: clamp(300px,30vw,500px);
-  border: 1px solid black;
+  background-color: #333533;
+  border: 1px solid #F5CB5C;
+  text-shadow: 0 0 3px #F5CB5C, 0 0 6px #F5CB5C, 0 0 12px #F5CB5C;
   display: flex;
+  font-size:4rem;
   flex-direction: column;
   flex-shrink: 0; 
   justify-self: center;
 }
+
 .row-container {
   display: flex;
   flex: 1;
@@ -65,27 +72,62 @@ main {
   grid-column: 3/4;
 }
 .player1ScoreContainer,.player2ScoreContainer{
-  border:1px solid black;
   width: clamp(300px,30vw,500px);
   height: clamp(300px,30vw,500px);
   text-align: center;
   font-size: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  gap:10rem;
+}
+.scoreCounterContainer1,.scoreCounterContainer2{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  background-color: #333533;
+  gap:1rem;
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid #F5CB5C;
+}
+.player1Name, .player2Name{
+  background-color: #333533;
+  border: 1px solid #F5CB5C;
+  padding:2rem;
+  border-radius: 20px;
 }
 h2{
   font-size: 2rem;
 }
 .display{
+  grid-column: 2/3;
+  grid-row: 1/2;
   width: clamp(300px,30vw,500px);
   padding:20px;
-  border: 1px solid black;
+  border: 1px solid #F5CB5C;
+  background-color: #333533;
   text-align: center;
   font-weight: bold;
+  font-size: 2rem;
 }
 .homeButton{
   width: clamp(150px,15vw,250px);
   padding:10px 20px;
+}
+.newRoundButton{
+  grid-column: 2/3;
+}
+.invisible{
+  display: none;
+}
+button{
+  background-color: #333533;
+  color: white;
+  padding:2rem;
+  border-radius: 20px;
+  border: 1px solid #F5CB5C;
 }
 
 

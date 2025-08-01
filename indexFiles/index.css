@@ -33,9 +33,12 @@ header, footer{
   justify-content: center;
   align-items: center;
   flex: 0 0 10vh;
-  background-color: rgb(34, 33, 33);
+  background-color: #333533;
   padding: clamp(1rem,2vh,1.5rem) 0;
-  color:white;
+  color:#F5CB5C;
+}
+header{
+  border-bottom: 1px solid #CFDBD5;
 }
 header h1{
   font-size: clamp(50px,7vh,100px);
@@ -45,7 +48,7 @@ header h1{
 
 main {
   flex: 1;
-  background-color: rgba(240, 247, 250, 0.945);
+  background-color: #242423;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,8 +63,9 @@ gap:clamp(10px,5vh,100px);
 width: clamp(250px,25vw,350px);
 height: clamp(fit-content,35vh,450px);
 padding:50px 0;
-border:1px solid black;
+border:1px solid #F5CB5C;
 border-radius: 1rem;
+color: #E8EDDF;
 }
 input,button{
     width: clamp(100px,15vw,200px);
@@ -87,4 +91,5 @@ h2{
 
 footer {
   flex: 0 0 5vh;
+  border-top: 1px solid #CFDBD5
 }
