@@ -49,10 +49,6 @@ const renderElements = (function () {
     player1H2.textContent = player1Name;
     player1H2.classList.add("player1Name");
 
-    const title = document.createElement("h2");
-    title.classList.add("scoreTitle");
-    title.textContent = "Score";
-
     const score = document.createElement("div");
     score.classList.add("scoreCounter");
     score.textContent = "0";
@@ -67,10 +63,6 @@ const renderElements = (function () {
     const player2H2 = document.createElement("h2");
     player2H2.textContent = player2Name;
     player2H2.classList.add("player2Name");
-
-    const title = document.createElement("h2");
-    title.classList.add("scoreTitle");
-    title.textContent = "Score";
 
     const score = document.createElement("div");
     score.classList.add("scoreCounter");
@@ -309,10 +301,10 @@ const handleGameControl = function (player1, player2) {
   const eventHandler = handleEventListeners();
   function resetCounter(){
     const scoreCounter1 = document.querySelector(
-      ".scoreCounterContainer1 > .scoreCounter"
+      ".player1Container > .scoreCounter"
     );
     const scoreCounter2 = document.querySelector(
-      ".scoreCounterContainer2 > .scoreCounter"
+      ".player2Container> .scoreCounter"
     );
     scoreCounter1.textContent="0";
     scoreCounter2.textContent="0";
