@@ -22,6 +22,7 @@ const renderElements = (function () {
   const player1Name = sessionStorage.getItem("player1Name");
   const player2Name = sessionStorage.getItem("player2Name");
   const main = document.querySelector("main");
+  const playersContainer = document.querySelector(".playersScoresContainer"); 
   (function renderBoard() {
     const divContainer = document.createElement("div");
     divContainer.classList.add("div-container");
@@ -42,7 +43,8 @@ const renderElements = (function () {
     main.appendChild(divContainer);
   })();
   (function renderPlayer1ScoreContainer() {
-    const player1ScoreDiv = document.querySelector(".player1ScoreContainer");
+    const player1Container = document.createElement("div");
+    player1Container.classList.add("player1Container")
     const player1H2 = document.createElement("h2");
     player1H2.textContent = player1Name;
     player1H2.classList.add("player1Name");
@@ -61,11 +63,13 @@ const renderElements = (function () {
     scoreDiv.appendChild(title);
     scoreDiv.appendChild(score);
 
-    player1ScoreDiv.appendChild(player1H2);
-    player1ScoreDiv.appendChild(scoreDiv);
+    player1Container.appendChild(player1H2);
+    player1Container.appendChild(scoreDiv);
+    playersContainer.appendChild(player1Container);
   })();
   (function renderPlayer2ScoreContainer() {
-    const player2ScoreDiv = document.querySelector(".player2ScoreContainer");
+    const player2Container = document.createElement("div");
+    player2Container.classList.add("player2Container")
     const player2H2 = document.createElement("h2");
     player2H2.textContent = player2Name;
     player2H2.classList.add("player2Name");
@@ -84,8 +88,9 @@ const renderElements = (function () {
     scoreDiv.appendChild(title);
     scoreDiv.appendChild(score);
 
-    player2ScoreDiv.appendChild(player2H2);
-    player2ScoreDiv.appendChild(scoreDiv);
+    player2Container.appendChild(player2H2);
+    player2Container.appendChild(scoreDiv);
+    playersContainer.appendChild(player2Container);
   })();
   (function renderGameDisplay() {
     const displayContainer = document.createElement("div");
@@ -93,17 +98,26 @@ const renderElements = (function () {
     main.appendChild(displayContainer);
   })();
   (function renderReturnButton() {
+    const controlElementsButtonsContainer =document.querySelector(".controlElementsButtonsContainer");
     const returnButton = document.createElement("button");
     returnButton.classList.add("returnButton");
-    returnButton.textContent = "Return";
-    main.appendChild(returnButton);
+    returnButton.textContent = "Homescreen";
+    controlElementsButtonsContainer.appendChild(returnButton);
+  })();
+  (function resetScoreButton(){
+    const controlElementsButtonsContainer =document.querySelector(".controlElementsButtonsContainer");
+    const resetButton = document.createElement("button");
+    resetButton.classList.add("resetButton");
+    resetButton.textContent="Reset Score";
+    controlElementsButtonsContainer.appendChild(resetButton);
   })();
   (function renderNewRoundButton() {
     const newRoundButton = document.createElement("button");
+    const controlElementsButtonsContainer =document.querySelector(".controlElementsButtonsContainer");
     newRoundButton.textContent = "New Round";
     newRoundButton.classList.add("newRoundButton");
     newRoundButton.classList.add("invisible");
-    main.appendChild(newRoundButton);
+   controlElementsButtonsContainer.appendChild(newRoundButton);
   })();
 })();
 function createPlayer(name, token) {
@@ -287,9 +301,17 @@ const handleGameControl = function (player1, player2) {
         startDialog();
       });
     }
+    function setClickOnResetButton(){
+      const resetButton = document.querySelector(".resetButton");
+      resetButton.addEventListener("click",()=>{
+        resetCounter();
+      })
+    }
+    
     setClickEventOnReturnButton();
     setClickEventOnCells();
     setClickEventOnNewRoundButton();
+    setClickOnResetButton();
     return {
       handleCellClick,
       setClickEventOnCells,
@@ -297,17 +319,26 @@ const handleGameControl = function (player1, player2) {
     };
   };
   const eventHandler = handleEventListeners();
-
+  function resetCounter(){
+    const scoreCounter1 = document.querySelector(
+      ".scoreCounterContainer1 > .scoreCounter"
+    );
+    const scoreCounter2 = document.querySelector(
+      ".scoreCounterContainer2 > .scoreCounter"
+    );
+    scoreCounter1.textContent="0";
+    scoreCounter2.textContent="0";
+  }
   function increaseCounter() {
     const winner = playerHandler.getActivePlayer();
     if (winner.name === document.querySelector(".player1Name").textContent) {
       const scoreCounter = document.querySelector(
-        ".player1ScoreContainer > .scoreCounterContainer1 > .scoreCounter"
+        ".scoreCounterContainer1 > .scoreCounter"
       );
       scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
     } else {
       const scoreCounter = document.querySelector(
-        ".player2ScoreContainer > .scoreCounterContainer2 > .scoreCounter"
+        ".scoreCounterContainer2 > .scoreCounter"
       );
       scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
     }
