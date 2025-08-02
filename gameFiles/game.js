@@ -49,9 +49,6 @@ const renderElements = (function () {
     player1H2.textContent = player1Name;
     player1H2.classList.add("player1Name");
 
-    const scoreDiv = document.createElement("div");
-    scoreDiv.classList.add("scoreCounterContainer1");
-
     const title = document.createElement("h2");
     title.classList.add("scoreTitle");
     title.textContent = "Score";
@@ -60,11 +57,8 @@ const renderElements = (function () {
     score.classList.add("scoreCounter");
     score.textContent = "0";
 
-    scoreDiv.appendChild(title);
-    scoreDiv.appendChild(score);
-
     player1Container.appendChild(player1H2);
-    player1Container.appendChild(scoreDiv);
+    player1Container.appendChild(score);
     playersContainer.appendChild(player1Container);
   })();
   (function renderPlayer2ScoreContainer() {
@@ -74,9 +68,6 @@ const renderElements = (function () {
     player2H2.textContent = player2Name;
     player2H2.classList.add("player2Name");
 
-    const scoreDiv = document.createElement("div");
-    scoreDiv.classList.add("scoreCounterContainer2");
-
     const title = document.createElement("h2");
     title.classList.add("scoreTitle");
     title.textContent = "Score";
@@ -85,11 +76,8 @@ const renderElements = (function () {
     score.classList.add("scoreCounter");
     score.textContent = "0";
 
-    scoreDiv.appendChild(title);
-    scoreDiv.appendChild(score);
-
     player2Container.appendChild(player2H2);
-    player2Container.appendChild(scoreDiv);
+    player2Container.appendChild(score);
     playersContainer.appendChild(player2Container);
   })();
   (function renderGameDisplay() {
@@ -147,18 +135,20 @@ const handlePlayers = function (player1, player2) {
   function displayWinner() {
     divDisplay.textContent = `${getActivePlayer().name} has won!`;
   }
+  function displayTie(){
+    divDisplay.textContent = "No empty cells left, it's a tie!";
+  }
   return {
     getActivePlayer,
     setActivePlayer,
     switchPlayerTurn,
     displayWinner,
     getFirstPlayer,
+    displayTie,
   };
 };
 const handleGameLogic = function () {
   const cells = document.querySelectorAll(".cell");
-  const playersHandler = handlePlayers(player1, player2);
-  const divDisplay = getDisplayDiv();
   function getArrayFromCells() {
     const cellsArray = [];
     for (let i = 0; i < 3; i++) {
@@ -180,8 +170,6 @@ const handleGameLogic = function () {
         }
       }
     }
-    divDisplay.textContent = "No empty cells left, it's a tie!";
-    console.log("No empty cells left, it's a tie!");
     return false;
   }
   function isTheCellAlreadyMarked(div) {
@@ -333,12 +321,12 @@ const handleGameControl = function (player1, player2) {
     const winner = playerHandler.getActivePlayer();
     if (winner.name === document.querySelector(".player1Name").textContent) {
       const scoreCounter = document.querySelector(
-        ".scoreCounterContainer1 > .scoreCounter"
+        ".player1Container > .scoreCounter"
       );
       scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
     } else {
       const scoreCounter = document.querySelector(
-        ".scoreCounterContainer2 > .scoreCounter"
+        ".player2Container > .scoreCounter"
       );
       scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
     }
@@ -352,7 +340,9 @@ const handleGameControl = function (player1, player2) {
       newRoundButton.classList.remove("invisible");
       return false;
     } else if (!gameLogicHandler.areThereCellsLeft()) {
+      playerHandler.displayTie();
       eventHandler.removeClickEventOnCells();
+      newRoundButton.classList.remove("invisible");
       return false;
     }
     return true;

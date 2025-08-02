@@ -81,10 +81,7 @@ main {
 .player2ScoreContainer{
   grid-column: 3/4;
 }
-.scoreCounterContainer1,.scoreCounterContainer2{
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
+.scoreCounter{
   background-color: #333533;
   gap:1rem;
   border: 1px solid #F5CB5C;
