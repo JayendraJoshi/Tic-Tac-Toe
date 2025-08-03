@@ -1,44 +1,80 @@
-const gamePageModule = function(){
+function clearMainElement() {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+}
+const startPageModule = function () {
   clearMainElement();
-  function createBoardCell() {
-    let div = document.createElement("div");
-  
-    (function styleDiv() {
-      div.style.border = "1px solid #F5CB5C";
-      div.style.flexGrow = "1";
-      div.style.width = "100%";
-      div.style.display = "flex";
-      div.style.justifyContent = "center";
-      div.style.alignItems = "center";
-    })();
-  
-    function getDiv() {
-      return div;
+  (function renderStartPage() {
+    const form = document.createElement("form");
+    const main = document.querySelector("main");
+    const label1 = document.createElement("label");
+    label1.setAttribute("for", "player1Input");
+    label1.textContent = "Player1 (X)";
+
+    const input1 = document.createElement("input");
+    input1.setAttribute("id", "player1Input");
+    input1.setAttribute("value", "Player 1");
+    input1.required = true;
+
+    label1.appendChild(input1);
+
+    const label2 = document.createElement("label");
+    label2.setAttribute("for", "player2Input");
+    label2.textContent = "Player2 (O)";
+
+    const input2 = document.createElement("input");
+    input2.setAttribute("id", "player2Input");
+    input2.setAttribute("value", "Player 2");
+    input2.required = true;
+
+    label2.appendChild(input2);
+
+    const button = document.createElement("button");
+    button.classList.add("startGameButton");
+    button.type = "submit";
+    button.textContent = "Start game";
+
+    form.appendChild(label1);
+    form.appendChild(label2);
+    form.appendChild(button);
+    main.appendChild(form);
+    main.classList.remove("gamePageMain");
+    main.classList.add("startPageMain");
+  })();
+  const handleFormEvent = (function () {
+    const form = document.querySelector("form");
+    if (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const player1 = document.getElementById("player1Input");
+        const player2 = document.getElementById("player2Input");
+
+        sessionStorage.setItem("player1Name", player1.value);
+        sessionStorage.setItem("player2Name", player2.value);
+        gamePageModule();
+      });
     }
-  
-    return {
-      getDiv,
-    };
-  }
+  })();
+};
+const gamePageModule = function () {
+  clearMainElement();
   const renderGamePage = (function () {
     const player1Name = sessionStorage.getItem("player1Name");
     const player2Name = sessionStorage.getItem("player2Name");
     const main = document.querySelector("main");
+
     (function renderBoard() {
       const divContainer = document.createElement("div");
-      divContainer.classList.add("div-container");
-  
+      divContainer.classList.add("rowsContainer");
+
       for (let i = 0; i < 3; i++) {
         let divRowContainer = document.createElement("div");
-        divRowContainer.classList.add(`row-${i}`);
         for (let j = 0; j < 3; j++) {
-          let divChild = createBoardCell().getDiv();
-          divChild.classList.add(`row-${i}`);
-          divChild.classList.add(`num-${j}`);
+          let divChild = document.createElement("div");
           divChild.classList.add("cell");
           divRowContainer.appendChild(divChild);
         }
-        divRowContainer.classList.add("row-container");
+        divRowContainer.classList.add("cellsContainer");
         divContainer.appendChild(divRowContainer);
       }
       main.appendChild(divContainer);
@@ -57,11 +93,11 @@ const gamePageModule = function(){
         const player1H2 = document.createElement("h2");
         player1H2.textContent = player1Name;
         player1H2.classList.add("player1Name");
-  
+
         const score = document.createElement("div");
         score.classList.add("scoreCounter");
         score.textContent = "0";
-  
+
         player1Container.appendChild(player1H2);
         player1Container.appendChild(score);
         playersContainer.appendChild(player1Container);
@@ -72,11 +108,11 @@ const gamePageModule = function(){
         const player2H2 = document.createElement("h2");
         player2H2.textContent = player2Name;
         player2H2.classList.add("player2Name");
-  
+
         const score = document.createElement("div");
         score.classList.add("scoreCounter");
         score.textContent = "0";
-  
+
         player2Container.appendChild(player2H2);
         player2Container.appendChild(score);
         playersContainer.appendChild(player2Container);
@@ -184,20 +220,19 @@ const gamePageModule = function(){
   };
   const handleGameLogic = function () {
     const cells = document.querySelectorAll(".cell");
-    function getArrayFromCells() {
-      const cellsArray = [];
-      for (let i = 0; i < 3; i++) {
-        const row = [];
-        for (let j = 0; j < 3; j++) {
-          const cell = document.querySelector(`.row-${i}.num-${j}`);
-          row.push(cell.textContent);
-        }
-        cellsArray.push(row);
+    function get2DArrayOfTheTextContentOfCells() {
+      const flatArrayOfTextContent = Array.from(cells).map(
+        (cell) => cell.textContent
+      );
+      const result = [];
+      for (let i = 0; i < flatArrayOfTextContent.length; i += 3) {
+        const row = flatArrayOfTextContent.slice(i, i + 3);
+        result.push(row);
       }
-      return cellsArray;
+      return result;
     }
     function areThereCellsLeft() {
-      const boardWithCellValues = getArrayFromCells();
+      const boardWithCellValues = get2DArrayOfTheTextContentOfCells();
       for (let i = 0; i < boardWithCellValues.length; i++) {
         for (let j = 0; j < boardWithCellValues[i].length; j++) {
           if (boardWithCellValues[i][j] === "") {
@@ -213,7 +248,7 @@ const gamePageModule = function(){
       }
     }
     function hasSomeoneWon() {
-      const boardWithCellValues = getArrayFromCells();
+      const boardWithCellValues = get2DArrayOfTheTextContentOfCells();
       if (
         (boardWithCellValues[0][0] === "X" &&
           boardWithCellValues[0][1] === "X" &&
@@ -270,7 +305,7 @@ const gamePageModule = function(){
       }
     }
     return {
-      getArrayFromCells,
+      get2DArrayOfTheTextContentOfCells,
       areThereCellsLeft,
       hasSomeoneWon,
       isTheCellAlreadyMarked,
@@ -282,7 +317,7 @@ const gamePageModule = function(){
     const gameLogicHandler = handleGameLogic();
     const divDisplay = getDisplayDiv();
     const newRoundButton = document.querySelector(".newRoundButton");
-  
+
     const handleEventListeners = function () {
       function handleCellClick(event) {
         const div = event.target;
@@ -291,26 +326,26 @@ const gamePageModule = function(){
         }
         playRound(div);
       }
-  
+
       function setClickEventOnCells() {
         gameLogicHandler.cells.forEach((div) => {
           div.addEventListener("click", handleCellClick);
         });
       }
-  
+
       function removeClickEventOnCells() {
         gameLogicHandler.cells.forEach((div) => {
           div.removeEventListener("click", handleCellClick);
         });
       }
-  
+
       function setClickEventOnReturnButton() {
         const returnButton = document.querySelector(".returnButton");
         returnButton.addEventListener("click", function () {
-            startPageModule();
+          startPageModule();
         });
       }
-  
+
       function setClickEventOnNewRoundButton() {
         newRoundButton.addEventListener("click", function () {
           gameLogicHandler.cells.forEach((div) => {
@@ -327,7 +362,7 @@ const gamePageModule = function(){
           resetCounter();
         });
       }
-  
+
       setClickEventOnReturnButton();
       setClickEventOnCells();
       setClickEventOnNewRoundButton();
@@ -363,7 +398,7 @@ const gamePageModule = function(){
         scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
       }
     }
-  
+
     function checkIfGameCanContinue() {
       if (gameLogicHandler.hasSomeoneWon()) {
         playerHandler.displayWinner();
@@ -379,7 +414,7 @@ const gamePageModule = function(){
       }
       return true;
     }
-  
+
     const playRound = function (div) {
       div.textContent = playerHandler.getActivePlayer().token;
       if (!checkIfGameCanContinue()) {
@@ -389,11 +424,11 @@ const gamePageModule = function(){
       playerHandler.switchPlayerTurn();
     };
     const startDialog = () => {
-      divDisplay.textContent = `${playerHandler.getFirstPlayer().name}'s turn (${
-        playerHandler.getFirstPlayer().token
-      })`;
+      divDisplay.textContent = `${
+        playerHandler.getFirstPlayer().name
+      }'s turn (${playerHandler.getFirstPlayer().token})`;
     };
-  
+
     return {
       startDialog,
     };
@@ -405,65 +440,5 @@ const gamePageModule = function(){
   const player2 = createPlayer(sessionStorage.getItem("player2Name"), "O");
   const game = handleGameControl(player1, player2);
   game.startDialog();
-}
-function clearMainElement(){
-  const main = document.querySelector("main");
-  main.innerHTML ="";
-}
-const startPageModule = function(){
-  clearMainElement();
-  (function renderStartPage(){
-    const form = document.createElement("form");
-    const main = document.querySelector("main");
-    const label1 = document.createElement("label");
-    label1.setAttribute('for','player1Input');
-    label1.textContent="Player1 (X)";
-
-    const input1 = document.createElement("input");
-    input1.setAttribute('id','player1Input');
-    input1.setAttribute('value','Player 1');
-    input1.required= true;
-
-    label1.appendChild(input1);
-
-    const label2 = document.createElement("label");
-    label2.setAttribute('for','player2Input');
-    label2.textContent="Player2 (O)";
-
-    const input2 = document.createElement("input");
-    input2.setAttribute('id','player2Input');
-    input2.setAttribute('value','Player 2');
-    input2.required= true;
-
-    label2.appendChild(input2);
-    
-    const button = document.createElement("button");
-    button.classList.add("startGameButton");
-    button.type = 'submit';
-    button.textContent = 'Start game';
-
-    form.appendChild(label1);
-    form.appendChild(label2);
-    form.appendChild(button);
-    main.appendChild(form);
-    main.classList.remove('gamePageMain');
-    main.classList.add('startPageMain');
-  })();
-  const handleFormEvent = (function (){ 
-    const form = document.querySelector("form");
-    if (form) {
-        form.addEventListener("submit", function(event){
-            event.preventDefault();
-            const player1 = document.getElementById('player1Input');
-            const player2 = document.getElementById('player2Input');
-
-            sessionStorage.setItem('player1Name',player1.value);
-            sessionStorage.setItem('player2Name',player2.value);
-            gamePageModule(); 
-         
-          });
-    }
-  })();
-
 };
 startPageModule();
