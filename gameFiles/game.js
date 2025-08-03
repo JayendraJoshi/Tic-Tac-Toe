@@ -22,7 +22,6 @@ const renderElements = (function () {
   const player1Name = sessionStorage.getItem("player1Name");
   const player2Name = sessionStorage.getItem("player2Name");
   const main = document.querySelector("main");
-  const playersContainer = document.querySelector(".playersScoresContainer"); 
   (function renderBoard() {
     const divContainer = document.createElement("div");
     divContainer.classList.add("div-container");
@@ -42,62 +41,102 @@ const renderElements = (function () {
     }
     main.appendChild(divContainer);
   })();
-  (function renderPlayer1ScoreContainer() {
-    const player1Container = document.createElement("div");
-    player1Container.classList.add("player1Container")
-    const player1H2 = document.createElement("h2");
-    player1H2.textContent = player1Name;
-    player1H2.classList.add("player1Name");
-
-    const score = document.createElement("div");
-    score.classList.add("scoreCounter");
-    score.textContent = "0";
-
-    player1Container.appendChild(player1H2);
-    player1Container.appendChild(score);
-    playersContainer.appendChild(player1Container);
-  })();
-  (function renderPlayer2ScoreContainer() {
-    const player2Container = document.createElement("div");
-    player2Container.classList.add("player2Container")
-    const player2H2 = document.createElement("h2");
-    player2H2.textContent = player2Name;
-    player2H2.classList.add("player2Name");
-
-    const score = document.createElement("div");
-    score.classList.add("scoreCounter");
-    score.textContent = "0";
-
-    player2Container.appendChild(player2H2);
-    player2Container.appendChild(score);
-    playersContainer.appendChild(player2Container);
-  })();
   (function renderGameDisplay() {
     const displayContainer = document.createElement("div");
     displayContainer.classList.add("display");
     main.appendChild(displayContainer);
   })();
-  (function renderReturnButton() {
-    const controlElementsButtonsContainer =document.querySelector(".controlElementsButtonsContainer");
-    const returnButton = document.createElement("button");
-    returnButton.classList.add("returnButton");
-    returnButton.textContent = "Homescreen";
-    controlElementsButtonsContainer.appendChild(returnButton);
+  (function renderPlayerScoreElements() {
+    const playersContainer = document.createElement("div");
+    playersContainer.classList.add("playersContainer");
+    (function renderPlayer1ScoreContainer() {
+      const player1Container = document.createElement("div");
+      player1Container.classList.add("player1Container");
+      const player1H2 = document.createElement("h2");
+      player1H2.textContent = player1Name;
+      player1H2.classList.add("player1Name");
+
+      const score = document.createElement("div");
+      score.classList.add("scoreCounter");
+      score.textContent = "0";
+
+      player1Container.appendChild(player1H2);
+      player1Container.appendChild(score);
+      playersContainer.appendChild(player1Container);
+    })();
+    (function renderPlayer2ScoreContainer() {
+      const player2Container = document.createElement("div");
+      player2Container.classList.add("player2Container");
+      const player2H2 = document.createElement("h2");
+      player2H2.textContent = player2Name;
+      player2H2.classList.add("player2Name");
+
+      const score = document.createElement("div");
+      score.classList.add("scoreCounter");
+      score.textContent = "0";
+
+      player2Container.appendChild(player2H2);
+      player2Container.appendChild(score);
+      playersContainer.appendChild(player2Container);
+    })();
+    (function renderScoreBoard() {
+      const scoreBoard = document.createElement("div");
+      scoreBoard.classList.add("scoreBoard");
+      scoreBoard.textContent = "Score Board";
+      main.appendChild(scoreBoard);
+    })();
+    main.appendChild(playersContainer);
   })();
-  (function resetScoreButton(){
-    const controlElementsButtonsContainer =document.querySelector(".controlElementsButtonsContainer");
-    const resetButton = document.createElement("button");
-    resetButton.classList.add("resetButton");
-    resetButton.textContent="Reset Score";
-    controlElementsButtonsContainer.appendChild(resetButton);
-  })();
-  (function renderNewRoundButton() {
-    const newRoundButton = document.createElement("button");
-    const controlElementsButtonsContainer =document.querySelector(".controlElementsButtonsContainer");
-    newRoundButton.textContent = "New Round";
-    newRoundButton.classList.add("newRoundButton");
-    newRoundButton.classList.add("invisible");
-   controlElementsButtonsContainer.appendChild(newRoundButton);
+  (function renderControlElements() {
+    (function renderControlBoard() {
+      const controlBoard = document.createElement("div");
+      controlBoard.classList.add("controlBoard");
+      controlBoard.textContent = "Control Elements";
+      main.appendChild(controlBoard);
+    })();
+    (function renderControlElementsContainer() {
+      const controlElementsContainer = document.createElement("div");
+      controlElementsContainer.classList.add("controlElementsContainer");
+      main.appendChild(controlElementsContainer);
+    })();
+    (function renderControlElementsButtonsContainer() {
+      const controlElementsButtonsContainer = document.createElement("div");
+      controlElementsButtonsContainer.classList.add(
+        "controlElementsButtonsContainer"
+      );
+      const controlElementsContainer = document.querySelector(
+        ".controlElementsContainer"
+      );
+      controlElementsContainer.appendChild(controlElementsButtonsContainer);
+    })();
+    (function renderReturnButton() {
+      const controlElementsButtonsContainer = document.querySelector(
+        ".controlElementsButtonsContainer"
+      );
+      const returnButton = document.createElement("button");
+      returnButton.classList.add("returnButton");
+      returnButton.textContent = "Homescreen";
+      controlElementsButtonsContainer.appendChild(returnButton);
+    })();
+    (function resetScoreButton() {
+      const controlElementsButtonsContainer = document.querySelector(
+        ".controlElementsButtonsContainer"
+      );
+      const resetButton = document.createElement("button");
+      resetButton.classList.add("resetButton");
+      resetButton.textContent = "Reset Score";
+      controlElementsButtonsContainer.appendChild(resetButton);
+    })();
+    (function renderNewRoundButton() {
+      const newRoundButton = document.createElement("button");
+      const controlElementsButtonsContainer = document.querySelector(
+        ".controlElementsButtonsContainer"
+      );
+      newRoundButton.textContent = "New Round";
+      newRoundButton.classList.add("newRoundButton");
+      newRoundButton.classList.add("invisible");
+      controlElementsButtonsContainer.appendChild(newRoundButton);
+    })();
   })();
 })();
 function createPlayer(name, token) {
@@ -127,7 +166,7 @@ const handlePlayers = function (player1, player2) {
   function displayWinner() {
     divDisplay.textContent = `${getActivePlayer().name} has won!`;
   }
-  function displayTie(){
+  function displayTie() {
     divDisplay.textContent = "No empty cells left, it's a tie!";
   }
   return {
@@ -281,13 +320,13 @@ const handleGameControl = function (player1, player2) {
         startDialog();
       });
     }
-    function setClickOnResetButton(){
+    function setClickOnResetButton() {
       const resetButton = document.querySelector(".resetButton");
-      resetButton.addEventListener("click",()=>{
+      resetButton.addEventListener("click", () => {
         resetCounter();
-      })
+      });
     }
-    
+
     setClickEventOnReturnButton();
     setClickEventOnCells();
     setClickEventOnNewRoundButton();
@@ -299,15 +338,15 @@ const handleGameControl = function (player1, player2) {
     };
   };
   const eventHandler = handleEventListeners();
-  function resetCounter(){
+  function resetCounter() {
     const scoreCounter1 = document.querySelector(
       ".player1Container > .scoreCounter"
     );
     const scoreCounter2 = document.querySelector(
       ".player2Container> .scoreCounter"
     );
-    scoreCounter1.textContent="0";
-    scoreCounter2.textContent="0";
+    scoreCounter1.textContent = "0";
+    scoreCounter2.textContent = "0";
   }
   function increaseCounter() {
     const winner = playerHandler.getActivePlayer();

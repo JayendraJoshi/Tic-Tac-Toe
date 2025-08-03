@@ -96,7 +96,7 @@ main {
   width: clamp(180px,10vw,200px);
   text-align: center;
 }
-.playersScoresContainer{
+.playersContainer{
   grid-column: 1/2;
   grid-row: 2/3;
   width: clamp(200px,30vw,400px);
@@ -149,6 +149,8 @@ main {
   font-weight: bold;
   font-size: 2rem;
   align-self: flex-end;
+  grid-column: 1/2;
+  grid-row: 1/2;
 }
 h2{
   font-size: 2rem;
