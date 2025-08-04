@@ -9,12 +9,14 @@
   padding: 0;
   font: inherit;
 }
+/* font */
 @font-face {
   font-family: "Roboto";
   src: url("../fonts/Roboto-VariableFont_wdth\,wght.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
+/* body, header and footer styling for gamePage and StartPage*/
 body {
   font-family: "Roboto", sans-serif;
   min-height: 100vh;
@@ -35,10 +37,17 @@ header {
   border-bottom: 1px solid #cfdbd5;
 }
 header h1 {
-  font-size: clamp(50px, 7vh, 100px);
+  font-size: clamp(30px, 7vh, 100px);
   letter-spacing: 0;
   line-height: 1;
+  text-align: center;
 }
+footer {
+  flex: 0 0 5vh;
+  border-top: 1px solid #cfdbd5;
+}
+
+/* startPage styling*/
 .startPageMain {
   flex: 1;
   background-color: #242423;
@@ -76,6 +85,7 @@ label input {
   width: 100px;
   padding: 15px 5px;
 }
+ /* gamePage styling*/
 .gamePageMain {
   flex: 1;
   background-color: #242423;
@@ -91,13 +101,13 @@ label input {
 .gameStatusDisplay {
   grid-column: 2/3;
   grid-row: 1/2;
-  width: clamp(300px, 30vw, 500px);
-  padding: 20px;
+  width: clamp(200px, 30vw, 500px);
+  padding: clamp(5px,2vw,20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
   text-align: center;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: clamp(20px,3vw,2rem);
   align-self: flex-end;
 }
 .rowsContainer {
@@ -109,7 +119,7 @@ label input {
   border: 1px solid #f5cb5c;
   text-shadow: 0 0 3px #f5cb5c, 0 0 6px #f5cb5c, 0 0 12px #f5cb5c;
   display: flex;
-  font-size: 4rem;
+  font-size: clamp(20px,2vw,4rem);
   flex-direction: column;
   flex-shrink: 0;
   justify-self: center;
@@ -118,13 +128,34 @@ label input {
   display: flex;
   flex: 1;
 }
-.cell{
-  border: 1px solid #F5CB5C;
+.cell {
+  border: 1px solid #f5cb5c;
   flex-grow: 1;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.scoreElementsTitle {
+  width: clamp(100px, 30vw, 300px);
+  padding: clamp(5px,2vw,20px);
+  border: 1px solid #f5cb5c;
+  background-color: #333533;
+  text-align: center;
+  font-weight: bold;
+  font-size: clamp(20px,3vw,2rem);
+  align-self: flex-end;
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+.scoreElementsContainer {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  width: clamp(200px, 30vw, 300px);
+  height: clamp(200px, 30vw, 300px);
+  display: flex;
+  justify-content: center;
+  gap:clamp(0px,2vw,2rem);
 }
 .player1ScoreContainer {
   grid-column: 1/2;
@@ -134,78 +165,55 @@ label input {
 }
 .scoreCounter {
   background-color: #333533;
-  gap: 1rem;
+  gap: clamp(20px,2vw,2rem);
   border: 1px solid #f5cb5c;
   padding: 20px;
-  width: clamp(180px, 10vw, 200px);
   text-align: center;
 }
 .playerName {
   background-color: #333533;
   border: 1px solid #f5cb5c;
-  padding: 20px;
-  width: clamp(180px, 10vw, 200px);
+  padding: clamp(2px,2vw,20px);
   text-align: center;
-}
-.scoreElementsContainer {
-  grid-column: 1/2;
-  grid-row: 2/3;
-  width: clamp(200px, 30vw, 400px);
-  height: clamp(200px, 30vw, 400px);
-  display: flex;
-  gap: 3rem;
-  justify-content: center;
+  font-size: clamp(15px, 2vw, 20px);
 }
 .player1ScoreContainer,
 .player2ScoreContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-}
-.controlElementsContainer {
-  width: clamp(200px, 30vw, 400px);
-  height: clamp(200px, 30vw, 400px);
-  grid-row: 2/3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-.controlElementsButtonsContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  align-items: stretch;
+  gap: clamp(10px,2vw,2rem);
+  flex:1;
+ 
 }
 .controlElementsTitle {
-  width: clamp(200px, 30vw, 300px);
-  padding: 20px;
+  width: clamp(100px, 30vw, 300px);
+  padding: clamp(5px,2vw,20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
   text-align: center;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: clamp(20px,3vw,2rem);
   align-self: flex-end;
+}
+.controlElementsContainer {
+  width: clamp(200px, 30vw, 300px);
+  height: clamp(200px, 30vw, 300px);
+  grid-row: 2/3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px,2vw,2rem);
+}
+.controlElementsButtonsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px,2vw,2rem);
 }
 .newRoundButton {
   justify-self: center;
   align-self: center;
   grid-column: 1/3;
-}
-.scoreElementsTitle {
-  width: clamp(200px, 30vw, 300px);
-  padding: 20px;
-  border: 1px solid #f5cb5c;
-  background-color: #333533;
-  text-align: center;
-  font-weight: bold;
-  font-size: 2rem;
-  align-self: flex-end;
-  grid-column: 1/2;
-  grid-row: 1/2;
-}
-h2 {
-  font-size: 2rem;
 }
 .invisible {
   display: none;
@@ -216,8 +224,49 @@ button {
   padding: 20px;
   border: 1px solid #f5cb5c;
 }
-footer {
-  flex: 0 0 5vh;
-  border-top: 1px solid #cfdbd5;
+@media screen and (max-width: 700px) {
+  .gamePageMain {
+    display: grid; 
+    grid-template-areas: 
+      "scoreElementsTitle"
+      "scoreElementsContainer" 
+      "controlElementsTitle"
+      "controlElementsContainer"
+      "gameStatusDisplay"
+      "rowsContainer";
+    grid-template-columns: 1fr; 
+    grid-template-rows: repeat(6, auto); 
+  }
+  
+  .scoreElementsTitle {
+    grid-area: scoreElementsTitle;
+    width: clamp(200px, 30vw, 500px);
+    padding: clamp(5px,2vw,20px);
+  }
+  
+  .scoreElementsContainer {
+    grid-area: scoreElementsContainer;
+    width: clamp(200px, 30vw, 500px);
+    padding: 0;
+  }
+  
+  .controlElementsTitle {
+    grid-area: controlElementsTitle;
+    width: clamp(200px, 30vw, 500px);
+    padding: clamp(5px,2vw,20px);
+  }
+  
+  .controlElementsContainer {
+    grid-area: controlElementsContainer;
+    width: clamp(200px, 30vw, 500px);
+    padding: 0;
+  }
+  
+  .gameStatusDisplay {
+    grid-area: gameStatusDisplay;
+  }
+  
+  .rowsContainer {
+    grid-area: rowsContainer;
+  }
 }
-
