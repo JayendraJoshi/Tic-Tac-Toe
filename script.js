@@ -81,18 +81,18 @@ const gamePageModule = function () {
     })();
     (function renderGameDisplay() {
       const displayContainer = document.createElement("div");
-      displayContainer.classList.add("display");
+      displayContainer.classList.add("gameStatusDisplay");
       main.appendChild(displayContainer);
     })();
     (function renderPlayerScoreElements() {
       const playersContainer = document.createElement("div");
-      playersContainer.classList.add("playersContainer");
+      playersContainer.classList.add("scoreElementsContainer");
       (function renderPlayer1ScoreContainer() {
         const player1Container = document.createElement("div");
-        player1Container.classList.add("player1Container");
+        player1Container.classList.add("player1ScoreContainer");
         const player1H2 = document.createElement("h2");
         player1H2.textContent = player1Name;
-        player1H2.classList.add("player1Name");
+        player1H2.classList.add("playerName");
 
         const score = document.createElement("div");
         score.classList.add("scoreCounter");
@@ -104,10 +104,10 @@ const gamePageModule = function () {
       })();
       (function renderPlayer2ScoreContainer() {
         const player2Container = document.createElement("div");
-        player2Container.classList.add("player2Container");
+        player2Container.classList.add("player2ScoreContainer");
         const player2H2 = document.createElement("h2");
         player2H2.textContent = player2Name;
-        player2H2.classList.add("player2Name");
+        player2H2.classList.add("playerName");
 
         const score = document.createElement("div");
         score.classList.add("scoreCounter");
@@ -117,18 +117,18 @@ const gamePageModule = function () {
         player2Container.appendChild(score);
         playersContainer.appendChild(player2Container);
       })();
-      (function renderScoreBoard() {
+      (function renderScoreBoardTitle() {
         const scoreBoard = document.createElement("div");
-        scoreBoard.classList.add("scoreBoard");
+        scoreBoard.classList.add("scoreElementsTitle");
         scoreBoard.textContent = "Score Board";
         main.appendChild(scoreBoard);
       })();
       main.appendChild(playersContainer);
     })();
     (function renderControlElements() {
-      (function renderControlBoard() {
+      (function renderControlElementsTtile() {
         const controlBoard = document.createElement("div");
-        controlBoard.classList.add("controlBoard");
+        controlBoard.classList.add("controlElementsTitle");
         controlBoard.textContent = "Control Elements";
         main.appendChild(controlBoard);
       })();
@@ -147,13 +147,13 @@ const gamePageModule = function () {
         );
         controlElementsContainer.appendChild(controlElementsButtonsContainer);
       })();
-      (function renderReturnButton() {
+      (function renderstartPageButton() {
         const controlElementsButtonsContainer = document.querySelector(
           ".controlElementsButtonsContainer"
         );
         const returnButton = document.createElement("button");
-        returnButton.classList.add("returnButton");
-        returnButton.textContent = "Homescreen";
+        returnButton.classList.add("startPageButton");
+        returnButton.textContent = "Start Page";
         controlElementsButtonsContainer.appendChild(returnButton);
       })();
       (function resetScoreButton() {
@@ -161,7 +161,7 @@ const gamePageModule = function () {
           ".controlElementsButtonsContainer"
         );
         const resetButton = document.createElement("button");
-        resetButton.classList.add("resetButton");
+        resetButton.classList.add("resetScoreButton");
         resetButton.textContent = "Reset Score";
         controlElementsButtonsContainer.appendChild(resetButton);
       })();
@@ -339,8 +339,8 @@ const gamePageModule = function () {
         });
       }
 
-      function setClickEventOnReturnButton() {
-        const returnButton = document.querySelector(".returnButton");
+      function setClickEventOnStartPageButton() {
+        const returnButton = document.querySelector(".startPageButton");
         returnButton.addEventListener("click", function () {
           startPageModule();
         });
@@ -356,17 +356,17 @@ const gamePageModule = function () {
           startDialog();
         });
       }
-      function setClickOnResetButton() {
-        const resetButton = document.querySelector(".resetButton");
+      function setClickOnResetScoreButton() {
+        const resetButton = document.querySelector(".resetScoreButton");
         resetButton.addEventListener("click", () => {
           resetCounter();
         });
       }
 
-      setClickEventOnReturnButton();
+      setClickEventOnStartPageButton();
       setClickEventOnCells();
       setClickEventOnNewRoundButton();
-      setClickOnResetButton();
+      setClickOnResetScoreButton();
       return {
         handleCellClick,
         setClickEventOnCells,
@@ -376,24 +376,28 @@ const gamePageModule = function () {
     const eventHandler = handleEventListeners();
     function resetCounter() {
       const scoreCounter1 = document.querySelector(
-        ".player1Container > .scoreCounter"
+        ".player1ScoreContainer > .scoreCounter"
       );
       const scoreCounter2 = document.querySelector(
-        ".player2Container> .scoreCounter"
+        ".player2ScoreContainer> .scoreCounter"
       );
       scoreCounter1.textContent = "0";
       scoreCounter2.textContent = "0";
     }
     function increaseCounter() {
       const winner = playerHandler.getActivePlayer();
-      if (winner.name === document.querySelector(".player1Name").textContent) {
+      if (
+        winner.name ===
+        document.querySelector(".player1ScoreContainer > .playerName")
+          .textContent
+      ) {
         const scoreCounter = document.querySelector(
-          ".player1Container > .scoreCounter"
+          ".player1ScoreContainer > .scoreCounter"
         );
         scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
       } else {
         const scoreCounter = document.querySelector(
-          ".player2Container > .scoreCounter"
+          ".player2ScoreContainer > .scoreCounter"
         );
         scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
       }
@@ -418,7 +422,6 @@ const gamePageModule = function () {
     const playRound = function (div) {
       div.textContent = playerHandler.getActivePlayer().token;
       if (!checkIfGameCanContinue()) {
-        /*handleHomeButton();*/
         return;
       }
       playerHandler.switchPlayerTurn();
@@ -434,7 +437,7 @@ const gamePageModule = function () {
     };
   };
   function getDisplayDiv() {
-    return document.querySelector(".display");
+    return document.querySelector(".gameStatusDisplay");
   }
   const player1 = createPlayer(sessionStorage.getItem("player1Name"), "X");
   const player2 = createPlayer(sessionStorage.getItem("player2Name"), "O");
