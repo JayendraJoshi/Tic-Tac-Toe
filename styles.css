@@ -167,15 +167,19 @@ label input {
   background-color: #333533;
   gap: clamp(20px,2vw,2rem);
   border: 1px solid #f5cb5c;
-  padding: 20px;
+  padding: clamp(2px,2vw,20px);
   text-align: center;
+  height: clamp(40px,8vh,60px);
 }
 .playerName {
   background-color: #333533;
   border: 1px solid #f5cb5c;
-  padding: clamp(2px,2vw,20px);
-  text-align: center;
+  padding: clamp(2px,2vw,10px);
   font-size: clamp(15px, 2vw, 20px);
+  height:clamp(40px,10vh,60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .player1ScoreContainer,
 .player2ScoreContainer {
@@ -221,8 +225,11 @@ label input {
 button {
   background-color: #333533;
   color: white;
-  padding: 20px;
+  padding: clamp(2px,2vw,10px);
   border: 1px solid #f5cb5c;
+  flex:1;
+  height:clamp(40px,10vh,60px);
+  font-size: clamp(15px, 2vw, 20px);
 }
 @media screen and (max-width: 700px) {
   .gamePageMain {
@@ -234,39 +241,51 @@ button {
       "controlElementsContainer"
       "gameStatusDisplay"
       "rowsContainer";
-    grid-template-columns: 1fr; 
-    grid-template-rows: repeat(6, auto); 
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto 1fr; /* Last row takes remaining space */
+    height: 85vh;
   }
   
   .scoreElementsTitle {
     grid-area: scoreElementsTitle;
-    width: clamp(200px, 30vw, 500px);
+    width: clamp(200px, 45vw, 500px);
     padding: clamp(5px,2vw,20px);
   }
   
   .scoreElementsContainer {
     grid-area: scoreElementsContainer;
-    width: clamp(200px, 30vw, 500px);
+    width: clamp(200px, 45vw, 500px);
+    height: fit-content;
     padding: 0;
+    padding-top:clamp(5px,2vw,20px);
+    margin-bottom:clamp(10px,4vh,25px);
   }
-  
   .controlElementsTitle {
     grid-area: controlElementsTitle;
-    width: clamp(200px, 30vw, 500px);
+    width: clamp(200px, 45vw, 500px);
     padding: clamp(5px,2vw,20px);
   }
   
   .controlElementsContainer {
     grid-area: controlElementsContainer;
-    width: clamp(200px, 30vw, 500px);
+    width: clamp(200px, 45vw, 500px);
     padding: 0;
+    padding-top:clamp(5px,2vw,20px);
+    height: clamp(150px, 10vw,200px );
+    margin-bottom:clamp(10px,4vh,25px);
   }
-  
+  .controlElementsButtonsContainer{
+    width: clamp(200px, 45vw, 500px);
+  }
   .gameStatusDisplay {
     grid-area: gameStatusDisplay;
+    width: clamp(200px, 45vw, 500px);
+    margin-bottom:clamp(5px,2vw,20px);
   }
-  
   .rowsContainer {
     grid-area: rowsContainer;
+    width: clamp(200px, 45vw, 500px);
+    height: clamp(200px,40vw,500px);
+    align-self: flex-start;
   }
 }
