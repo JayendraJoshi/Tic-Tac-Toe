@@ -15,7 +15,6 @@ const startPageModule = function () {
     input1.setAttribute("id", "player1Input");
     input1.setAttribute("value", "Player 1");
     input1.required = true;
-
     label1.appendChild(input1);
 
     const label2 = document.createElement("label");
@@ -26,9 +25,8 @@ const startPageModule = function () {
     input2.setAttribute("id", "player2Input");
     input2.setAttribute("value", "Player 2");
     input2.required = true;
-
     label2.appendChild(input2);
-
+    
     const button = document.createElement("button");
     button.classList.add("startGameButton");
     button.type = "submit";
@@ -37,6 +35,7 @@ const startPageModule = function () {
     form.appendChild(label1);
     form.appendChild(label2);
     form.appendChild(button);
+
     main.appendChild(form);
     main.classList.remove("gamePageMain");
     main.classList.add("startPageMain");
@@ -48,7 +47,6 @@ const startPageModule = function () {
         event.preventDefault();
         const player1 = document.getElementById("player1Input");
         const player2 = document.getElementById("player2Input");
-
         sessionStorage.setItem("player1Name", player1.value);
         sessionStorage.setItem("player2Name", player2.value);
         gamePageModule();
@@ -326,26 +324,22 @@ const gamePageModule = function () {
         }
         playRound(div);
       }
-
       function setClickEventOnCells() {
         gameLogicHandler.cells.forEach((div) => {
           div.addEventListener("click", handleCellClick);
         });
       }
-
       function removeClickEventOnCells() {
         gameLogicHandler.cells.forEach((div) => {
           div.removeEventListener("click", handleCellClick);
         });
       }
-
       function setClickEventOnStartPageButton() {
         const returnButton = document.querySelector(".startPageButton");
         returnButton.addEventListener("click", function () {
           startPageModule();
         });
       }
-
       function setClickEventOnNewRoundButton() {
         newRoundButton.addEventListener("click", function () {
           gameLogicHandler.cells.forEach((div) => {
@@ -362,7 +356,6 @@ const gamePageModule = function () {
           resetCounter();
         });
       }
-
       setClickEventOnStartPageButton();
       setClickEventOnCells();
       setClickEventOnNewRoundButton();
@@ -402,7 +395,6 @@ const gamePageModule = function () {
         scoreCounter.textContent = parseInt(scoreCounter.textContent) + 1;
       }
     }
-
     function checkIfGameCanContinue() {
       if (gameLogicHandler.hasSomeoneWon()) {
         playerHandler.displayWinner();
@@ -418,7 +410,6 @@ const gamePageModule = function () {
       }
       return true;
     }
-
     const playRound = function (div) {
       div.textContent = playerHandler.getActivePlayer().token;
       if (!checkIfGameCanContinue()) {
@@ -431,7 +422,6 @@ const gamePageModule = function () {
         playerHandler.getFirstPlayer().name
       }'s turn (${playerHandler.getFirstPlayer().token})`;
     };
-
     return {
       startDialog,
     };

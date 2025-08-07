@@ -46,7 +46,6 @@ footer {
   flex: 0 0 5vh;
   border-top: 1px solid #cfdbd5;
 }
-
 /* startPage styling*/
 .startPageMain {
   flex: 1;
@@ -85,7 +84,7 @@ label input {
   width: 100px;
   padding: 15px 5px;
 }
- /* gamePage styling*/
+/* gamePage styling*/
 .gamePageMain {
   flex: 1;
   background-color: #242423;
@@ -102,12 +101,12 @@ label input {
   grid-column: 2/3;
   grid-row: 1/2;
   width: clamp(200px, 30vw, 500px);
-  padding: clamp(5px,2vw,20px);
+  padding: clamp(5px, 2vw, 20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
   text-align: center;
   font-weight: bold;
-  font-size: clamp(20px,3vw,2rem);
+  font-size: clamp(20px, 3vw, 2rem);
   align-self: flex-end;
 }
 .rowsContainer {
@@ -119,7 +118,7 @@ label input {
   border: 1px solid #f5cb5c;
   text-shadow: 0 0 3px #f5cb5c, 0 0 6px #f5cb5c, 0 0 12px #f5cb5c;
   display: flex;
-  font-size: clamp(20px,2vw,4rem);
+  font-size: clamp(20px, 2vw, 4rem);
   flex-direction: column;
   flex-shrink: 0;
   justify-self: center;
@@ -138,12 +137,12 @@ label input {
 }
 .scoreElementsTitle {
   width: clamp(100px, 30vw, 300px);
-  padding: clamp(5px,2vw,20px);
+  padding: clamp(5px, 2vw, 20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
   text-align: center;
   font-weight: bold;
-  font-size: clamp(20px,3vw,2rem);
+  font-size: clamp(20px, 3vw, 2rem);
   align-self: flex-end;
   grid-column: 1/2;
   grid-row: 1/2;
@@ -155,7 +154,7 @@ label input {
   height: clamp(200px, 30vw, 300px);
   display: flex;
   justify-content: center;
-  gap:clamp(0px,2vw,2rem);
+  gap: clamp(10px, 2vw, 2rem);
 }
 .player1ScoreContainer {
   grid-column: 1/2;
@@ -165,18 +164,21 @@ label input {
 }
 .scoreCounter {
   background-color: #333533;
-  gap: clamp(20px,2vw,2rem);
+  gap: clamp(20px, 2vw, 2rem);
   border: 1px solid #f5cb5c;
-  padding: clamp(2px,2vw,20px);
+  padding: clamp(2px, 2vw, 20px);
   text-align: center;
-  height: clamp(40px,8vh,60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: clamp(40px, 10vh, 60px);
 }
 .playerName {
   background-color: #333533;
   border: 1px solid #f5cb5c;
-  padding: clamp(2px,2vw,10px);
+  padding: clamp(2px, 2vw, 10px);
   font-size: clamp(15px, 2vw, 20px);
-  height:clamp(40px,10vh,60px);
+  height: clamp(40px, 10vh, 60px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,18 +188,17 @@ label input {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: clamp(10px,2vw,2rem);
-  flex:1;
- 
+  gap: clamp(10px, 2vw, 2rem);
+  flex: 1;
 }
 .controlElementsTitle {
   width: clamp(100px, 30vw, 300px);
-  padding: clamp(5px,2vw,20px);
+  padding: clamp(5px, 2vw, 20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
   text-align: center;
   font-weight: bold;
-  font-size: clamp(20px,3vw,2rem);
+  font-size: clamp(20px, 3vw, 2rem);
   align-self: flex-end;
 }
 .controlElementsContainer {
@@ -206,13 +207,13 @@ label input {
   grid-row: 2/3;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: clamp(20px,2vw,2rem);
+  gap: clamp(20px, 2vw, 2rem);
 }
 .controlElementsButtonsContainer {
   display: grid;
+  flex:1;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(10px,2vw,2rem);
+  gap: clamp(10px, 2vw, 2rem);
 }
 .newRoundButton {
   justify-self: center;
@@ -225,18 +226,20 @@ label input {
 button {
   background-color: #333533;
   color: white;
-  padding: clamp(2px,2vw,10px);
+  padding: clamp(2px, 2vw, 10px);
   border: 1px solid #f5cb5c;
-  flex:1;
-  height:clamp(40px,10vh,60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(40px, 10vh, 60px);
   font-size: clamp(15px, 2vw, 20px);
 }
 @media screen and (max-width: 700px) {
   .gamePageMain {
-    display: grid; 
-    grid-template-areas: 
+    display: grid;
+    grid-template-areas:
       "scoreElementsTitle"
-      "scoreElementsContainer" 
+      "scoreElementsContainer"
       "controlElementsTitle"
       "controlElementsContainer"
       "gameStatusDisplay"
@@ -245,47 +248,44 @@ button {
     grid-template-rows: auto auto auto auto auto 1fr; /* Last row takes remaining space */
     height: 85vh;
   }
-  
   .scoreElementsTitle {
     grid-area: scoreElementsTitle;
     width: clamp(200px, 45vw, 500px);
-    padding: clamp(5px,2vw,20px);
+    padding: clamp(5px, 2vw, 20px);
   }
-  
   .scoreElementsContainer {
     grid-area: scoreElementsContainer;
     width: clamp(200px, 45vw, 500px);
     height: fit-content;
     padding: 0;
-    padding-top:clamp(5px,2vw,20px);
-    margin-bottom:clamp(10px,4vh,25px);
+    padding-top: clamp(5px, 2vw, 20px);
+    margin-bottom: clamp(10px, 4vh, 25px);
   }
   .controlElementsTitle {
     grid-area: controlElementsTitle;
     width: clamp(200px, 45vw, 500px);
-    padding: clamp(5px,2vw,20px);
+    padding: clamp(5px, 2vw, 20px);
   }
-  
   .controlElementsContainer {
     grid-area: controlElementsContainer;
     width: clamp(200px, 45vw, 500px);
     padding: 0;
-    padding-top:clamp(5px,2vw,20px);
-    height: clamp(150px, 10vw,200px );
-    margin-bottom:clamp(10px,4vh,25px);
+    padding-top: clamp(5px, 2vw, 20px);
+    height: clamp(150px, 10vw, 200px);
+    margin-bottom: clamp(10px, 4vh, 25px);
   }
-  .controlElementsButtonsContainer{
+  .controlElementsButtonsContainer {
     width: clamp(200px, 45vw, 500px);
   }
   .gameStatusDisplay {
     grid-area: gameStatusDisplay;
     width: clamp(200px, 45vw, 500px);
-    margin-bottom:clamp(5px,2vw,20px);
+    margin-bottom: clamp(5px, 2vw, 20px);
   }
   .rowsContainer {
     grid-area: rowsContainer;
     width: clamp(200px, 45vw, 500px);
-    height: clamp(200px,40vw,500px);
+    height: clamp(200px, 40vw, 500px);
     align-self: flex-start;
   }
 }
