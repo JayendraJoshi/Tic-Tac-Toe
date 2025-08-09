@@ -12,7 +12,7 @@
 /* font */
 @font-face {
   font-family: "Roboto";
-  src: url("../fonts/Roboto-VariableFont_wdth\,wght.ttf") format("truetype");
+  src: url("./fonts/Roboto-VariableFont_wdth,wght.ttf");
   font-weight: 500;
   font-style: normal;
 }
@@ -82,7 +82,9 @@ label input {
 .startGameButton {
   align-self: center;
   width: 100px;
-  padding: 15px 5px;
+  height: clamp(40px, 10vh, 60px);
+  width: clamp(100px,15vh,140px);
+  padding: 0;
 }
 /* gamePage styling*/
 .gamePageMain {
@@ -136,7 +138,7 @@ label input {
   align-items: center;
 }
 .scoreElementsTitle {
-  width: clamp(100px, 30vw, 300px);
+  width: clamp(100px, 30vw, 350px);
   padding: clamp(5px, 2vw, 20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
@@ -192,7 +194,7 @@ label input {
   flex: 1;
 }
 .controlElementsTitle {
-  width: clamp(100px, 30vw, 300px);
+  width: clamp(100px, 30vw, 350px);
   padding: clamp(5px, 2vw, 20px);
   border: 1px solid #f5cb5c;
   background-color: #333533;
@@ -219,6 +221,7 @@ label input {
   justify-self: center;
   align-self: center;
   grid-column: 1/3;
+
 }
 .invisible {
   display: none;
