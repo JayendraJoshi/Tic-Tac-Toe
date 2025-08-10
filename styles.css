@@ -213,7 +213,6 @@ label input {
 }
 .controlElementsButtonsContainer {
   display: grid;
-  flex:1;
   grid-template-columns: 1fr 1fr;
   gap: clamp(10px, 2vw, 2rem);
 }
